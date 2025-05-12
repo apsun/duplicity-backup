@@ -1,0 +1,2 @@
+TARGET_URL='rsync://user@host://path/to/backup/dir'
+PASSPHRASE='password-used-to-encrypt-your-backup'

@@ -1,0 +1,84 @@
+#!/bin/bash
+set -euo pipefail
+
+if [ $# -lt 2 ] || ! [ -d "/etc/duplicity/$1" ]; then
+    echo >&2 "usage: $0 <profile> backup|list|verify|restore|status [args...]"
+    echo >&2
+    echo >&2 'configuration files:'
+    echo >&2 '/etc/duplicity/<profile>/conf: duplicity parameters; at a minimum TARGET_URL= is required'
+    echo >&2 '/etc/duplicity/<profile>/include: include list in rsync --include-from format'
+    echo >&2 '/etc/duplicity/<profile>/ssh_id: (optional) ssh private key if using ssh/rsync backend'
+    echo >&2
+    exit 1
+fi
+
+profile_dir="/etc/duplicity/$1"
+
+set -o allexport
+. "${profile_dir}/conf"
+set +o allexport
+
+opts=(
+    --verbosity "${VERBOSITY:-4}"
+    --s3-endpoint-url "${S3_ENDPOINT_URL:-}"
+    --ssh-options "-i \"${profile_dir}/ssh_id\" -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null"
+)
+
+# usage: backup
+backup() {
+    duplicity \
+        backup \
+        --include-filelist "${profile_dir}/include" \
+        --full-if-older-than 1M \
+        "${opts[@]}" \
+        '/' \
+        "${TARGET_URL}"
+
+    duplicity \
+        cleanup \
+        --force \
+        "${opts[@]}" \
+        "${TARGET_URL}"
+}
+
+# usage: list
+list() {
+    duplicity \
+        list-current-files \
+        "${opts[@]}" \
+        "${TARGET_URL}"
+}
+
+# usage: verify <abs/rel path to file>
+verify() {
+    duplicity \
+        verify \
+        --path-to-restore "$(realpath --relative-to '/' "$1")" \
+        --compare-data \
+        "${opts[@]}" \
+        "${TARGET_URL}" \
+        "$(realpath "$1")"
+}
+
+# usage: restore <abs/rel path to file> [time]
+restore() {
+    time="${2:-0D}"
+    duplicity \
+        restore \
+        --path-to-restore "$(realpath --relative-to '/' "$1")" \
+        --time "${time}" \
+        "${opts[@]}" \
+        "${TARGET_URL}" \
+        "$(realpath "$1")"
+}
+
+# usage: status
+status() {
+    duplicity \
+        collection-status \
+        "${opts[@]}" \
+        "${TARGET_URL}"
+}
+
+shift
+"$@"

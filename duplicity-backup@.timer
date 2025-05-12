@@ -1,0 +1,10 @@
+[Unit]
+Description=Run daily duplicity backup
+After=network-online.target nss-lookup.target
+
+[Timer]
+OnCalendar=*-*-* 03:00:00
+Persistent=true
+
+[Install]
+WantedBy=timers.target

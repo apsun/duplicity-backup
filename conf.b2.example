@@ -1,0 +1,5 @@
+TARGET_URL='boto3+s3://your-bucket-name'
+S3_ENDPOINT_URL='https://s3.us-west-002.backblazeb2.com'
+AWS_ACCESS_KEY_ID='your-access-key-id'
+AWS_SECRET_ACCESS_KEY='your-secret-access-key'
+PASSPHRASE='password-used-to-encrypt-your-backup'
