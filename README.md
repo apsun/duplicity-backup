@@ -1,9 +1,9 @@
 # duplicity-backup
 
-An opinionated wrapper around [duplicity](https://duplicity.us/) for automated
-backups. As-written, it will keep up to a year's worth of backups, performing
-a daily incremental backup and a full backup once a month. Currently supports
-Backblaze B2 and rsync backends.
+An opinionated wrapper around [duplicity](https://duplicity.us/) for
+automated backups. By default, it will keep up to a year's worth of
+backups, performing a daily incremental backup and a full backup once a
+month. Currently supports Backblaze B2 and rsync backends.
 
 ## Setup
 

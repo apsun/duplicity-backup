@@ -29,7 +29,7 @@ backup() {
     duplicity \
         backup \
         --include-filelist "${profile_dir}/include" \
-        --full-if-older-than 1M \
+        --full-if-older-than "${FULL_BACKUP_PERIOD:-1M}" \
         "${opts[@]}" \
         '/' \
         "${TARGET_URL}"
@@ -39,6 +39,13 @@ backup() {
         --force \
         "${opts[@]}" \
         "${TARGET_URL}"
+
+    [ -n "${FULL_BACKUP_RETENTION_COUNT-12}" ] && \
+        duplicity \
+            remove-all-but-n-full "${FULL_BACKUP_RETENTION_COUNT-12}" \
+            --force \
+            "${opts[@]}" \
+            "${TARGET_URL}"
 }
 
 # usage: list
