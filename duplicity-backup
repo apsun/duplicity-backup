@@ -40,12 +40,13 @@ backup() {
         "${opts[@]}" \
         "${TARGET_URL}"
 
-    [ -n "${FULL_BACKUP_RETENTION_COUNT-12}" ] && \
+    if [ -n "${FULL_BACKUP_RETENTION_COUNT-12}" ]; then
         duplicity \
             remove-all-but-n-full "${FULL_BACKUP_RETENTION_COUNT-12}" \
             --force \
             "${opts[@]}" \
             "${TARGET_URL}"
+    fi
 }
 
 # usage: list
