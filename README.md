@@ -18,14 +18,14 @@ The repository comes with two example profiles, `b2` for Backblaze B2 and
 4. Enable "list all bucket names" option
 5. Configure object lock on the bucket (optional, for ransomware protection)
 6. Update `conf.b2.example` with the appropriate parameters
-7. Run `install.sh b2`
+7. Run `sudo ./install.sh b2`
 
 ### rsync
 
 1. Generate a ssh key with `ssh-keygen -N "" -C "duplicity@$(hostname)" -f ssh_id.example`
 2. Install the ssh key on the destination machine
 3. Update `conf.rsync.example` with the appropriate parameters
-4. Run `install.sh rsync`
+4. Run `sudo ./install.sh rsync`
 
 ## Configuration
 
@@ -34,6 +34,11 @@ Configuration lives in `/etc/duplicity/<profile>`. There are three files of inte
 - `conf`: parameters for the `duplicity` program
 - `include`: list of paths to include/exclude in the backup
 - `ssh_id`: ssh key for connecting to the target (when using rsync)
+
+## Updating
+
+To update `duplicity-backup`, just run `sudo ./install.sh` again without
+passing a profile name. This will re-install just the script.
 
 ## License
 
