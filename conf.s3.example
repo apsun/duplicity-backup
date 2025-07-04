@@ -5,6 +5,9 @@ AWS_SECRET_ACCESS_KEY='your-secret-access-key'
 TARGET_URL="boto3+s3://${BUCKET_NAME}"
 
 # if you want to use boto3 with non-s3 services
+# beware though, https://github.com/boto/boto3/issues/4392
+# means that this won't work for some backends
+# (for example, backblaze is currently broken)
 # S3_ENDPOINT_URL='https://s3.us-west-002.backblazeb2.com'
 
 # backup configuration
