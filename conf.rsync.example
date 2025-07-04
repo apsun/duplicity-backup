@@ -1,4 +1,7 @@
+# backend configuration
 TARGET_URL='rsync://user@host://path/to/backup/dir'
+
+# backup configuration
 PASSPHRASE='password-used-to-encrypt-your-backup'
 FULL_BACKUP_PERIOD='1M'
 FULL_BACKUP_RETENTION_COUNT=  # unlimited retention

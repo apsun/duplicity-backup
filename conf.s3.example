@@ -1,0 +1,13 @@
+# backend configuration
+BUCKET_NAME='your-bucket-name'
+AWS_ACCESS_KEY_ID='your-access-key-id'
+AWS_SECRET_ACCESS_KEY='your-secret-access-key'
+TARGET_URL="boto3+s3://${BUCKET_NAME}"
+
+# if you want to use boto3 with non-s3 services
+# S3_ENDPOINT_URL='https://s3.us-west-002.backblazeb2.com'
+
+# backup configuration
+PASSPHRASE='password-used-to-encrypt-your-backup'
+FULL_BACKUP_PERIOD='1M'
+FULL_BACKUP_RETENTION_COUNT='12'

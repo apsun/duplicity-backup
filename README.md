@@ -7,18 +7,17 @@ month. Currently supports Backblaze B2 and rsync backends.
 
 ## Setup
 
-The repository comes with two example profiles, `b2` for Backblaze B2 and
-`rsync` for rsync backends.
+The repository comes with three example profiles: `s3` for AWS S3,
+`b2` for Backblaze B2, and `rsync` for rsync backends.
 
-### Backblaze B2
+### AWS S3/Backblaze B2
 
-1. Ensure the `boto3` python package is installed on your machine
-2. Create a B2 bucket
+1. Ensure the `boto3` (for S3) or `b2sdk` (for B2) python package is installed
+2. Create a bucket
 3. Create an application key with read/write access to the bucket
-4. Enable "list all bucket names" option
-5. Configure object lock on the bucket (optional, for ransomware protection)
-6. Update `conf.b2.example` with the appropriate parameters
-7. Run `sudo ./install.sh b2`
+4. Configure object lock on the bucket (optional, for ransomware protection)
+5. Update `conf.{s3,b2}.example` with the appropriate parameters
+6. Run `sudo ./install.sh {s3,b2}`
 
 ### rsync
 

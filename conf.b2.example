@@ -1,7 +1,10 @@
-TARGET_URL='boto3+s3://your-bucket-name'
-S3_ENDPOINT_URL='https://s3.us-west-002.backblazeb2.com'
-AWS_ACCESS_KEY_ID='your-access-key-id'
-AWS_SECRET_ACCESS_KEY='your-secret-access-key'
+# backend configuration
+BUCKET_NAME='your-bucket-name'
+KEY_ID='your-b2-key-id'
+APPLICATION_KEY='your-b2-application-key'
+TARGET_URL="b2://${KEY_ID}:$(jq -Rr @uri <<< "${APPLICATION_KEY}")@${BUCKET_NAME}"
+
+# backup configuration
 PASSPHRASE='password-used-to-encrypt-your-backup'
 FULL_BACKUP_PERIOD='1M'
 FULL_BACKUP_RETENTION_COUNT='12'
