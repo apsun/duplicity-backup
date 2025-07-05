@@ -16,14 +16,14 @@ The repository comes with three example profiles: `s3` for AWS S3,
 2. Create a bucket
 3. Create an application key with read/write access to the bucket
 4. Configure object lock on the bucket (optional, for ransomware protection)
-5. Update `conf.{s3,b2}.example` with the appropriate parameters
+5. Update `conf.{s3,b2}.example` and `include.example` with the appropriate parameters
 6. Run `sudo ./install.sh {s3,b2}`
 
 ### rsync
 
 1. Generate a ssh key with `ssh-keygen -N "" -C "duplicity@$(hostname)" -f ssh_id.example`
 2. Install the ssh key on the destination machine
-3. Update `conf.rsync.example` with the appropriate parameters
+3. Update `conf.rsync.example` and `include.example` with the appropriate parameters
 4. Run `sudo ./install.sh rsync`
 
 ## Configuration
@@ -36,8 +36,8 @@ Configuration lives in `/etc/duplicity/<profile>`. There are three files of inte
 
 ## Updating
 
-To update `duplicity-backup`, just run `sudo ./install.sh` again without
-passing a profile name. This will re-install just the script.
+To update `duplicity-backup` without modifying your profile, just run `sudo ./install.sh`
+again without passing a profile name. This will re-install just the script.
 
 ## License
 
