@@ -2,8 +2,8 @@
 set -euo pipefail
 cd "$(dirname "$0")"
 
-if [ "${EUID}" -ne 0 ]; then
-    echo >&2 "you must run this script as root"
+if [ "${EUID}" -ne 0 ] || [ -z "${SUDO_USER:-}" ]; then
+    echo >&2 "you must run this script with sudo"
     exit 1
 fi
 
@@ -15,6 +15,8 @@ fi
 install -Dm755 duplicity-backup /usr/local/bin/
 install -Dm644 duplicity-backup@.service /etc/systemd/system/
 install -Dm644 duplicity-backup@.timer /etc/systemd/system/
+install -Dm644 duplicity-backup-watchdog@.service /etc/systemd/user/
+install -Dm644 duplicity-backup-watchdog@.timer /etc/systemd/user/
 systemctl daemon-reload
 echo "installed duplicity-backup"
 
@@ -37,5 +39,6 @@ if [ "$#" -eq 1 ]; then
     install -Dm600 include.example "${profile_dir}/include"
     [ -f ssh_id.example ] && install -Dm600 ssh_id.example "${profile_dir}/ssh_id"
     systemctl enable --now "duplicity-backup@${profile}.timer"
+    systemctl --user --machine ${SUDO_USER}@.host enable --now "duplicity-backup-watchdog@${profile}.timer"
     echo "enabled duplicity-backup@${profile}"
 fi

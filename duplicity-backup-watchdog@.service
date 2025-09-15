@@ -1,0 +1,13 @@
+[Unit]
+Description=Send a notification if duplicity-backup unit is in failed state
+
+[Service]
+Type=simple
+ExecStart=bash -c '\
+[ "$(systemctl show duplicity-backup@%i -p ActiveState --value)" = failed ] && \
+    notify-send \
+        -a "duplicity-backup" \
+        -i dialog-warning \
+        -u critical \
+        "duplicity-backup@%i failed!" \
+'
