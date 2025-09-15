@@ -42,6 +42,6 @@ if [ "$#" -eq 1 ]; then
 
     systemctl enable --now "duplicity-backup@${profile}.timer"
     echo "enabled duplicity-backup@${profile}.timer"
-    systemctl --user --machine ${SUDO_USER}@.host enable --now "duplicity-backup-watchdog@${profile}.timer"
+    systemctl --user --machine "${SUDO_USER}@.host" enable --now "duplicity-backup-watchdog@${profile}.timer"
     echo "enabled duplicity-backup-watchdog@${profile}.timer"
 fi
