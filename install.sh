@@ -36,7 +36,7 @@ if [ "$#" -eq 1 ]; then
 
     install -m700 -d "${profile_dir}"
     install -Dm600 "conf.${profile}.example" "${profile_dir}/conf"
-    install -Dm600 include.example "${profile_dir}/include"
+    install -Dm600 <(env -i "USER=${SUDO_USER}" envsubst < include.example) "${profile_dir}/include"
     [ -f ssh_id.example ] && install -Dm600 ssh_id.example "${profile_dir}/ssh_id"
     systemctl enable --now "duplicity-backup@${profile}.timer"
     systemctl --user --machine ${SUDO_USER}@.host enable --now "duplicity-backup-watchdog@${profile}.timer"
