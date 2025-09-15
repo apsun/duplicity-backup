@@ -42,6 +42,13 @@ if [ "$#" -eq 1 ]; then
 
     systemctl enable --now "duplicity-backup@${profile}.timer"
     echo "enabled duplicity-backup@${profile}.timer"
-    systemctl --user --machine "${SUDO_USER}@.host" enable --now "duplicity-backup-watchdog@${profile}.timer"
-    echo "enabled duplicity-backup-watchdog@${profile}.timer"
+
+    if command -v notify-send >/dev/null; then
+        systemctl --user --machine "${SUDO_USER}@.host" enable --now "duplicity-backup-watchdog@${profile}.timer"
+        echo "enabled duplicity-backup-watchdog@${profile}.timer"
+    else
+        systemctl --user --machine "${SUDO_USER}@.host" disable --now "duplicity-backup-watchdog@${profile}.timer"
+        echo >&2 "warning: notify-send not installed, you will not receive notifications on backup failure"
+        echo "disabled duplicity-backup-watchdog@${profile}.timer"
+    fi
 fi
